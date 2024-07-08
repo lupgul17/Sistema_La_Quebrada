@@ -96,3 +96,41 @@ class MenuRecetas(models.Model):
     def __str__(self):
         return self.idMenuRecetas
 #endregion
+
+#region Evento
+#------------ SECCION EVENTOS --------------
+class ServiciosOpcionales(models.Model):
+    servOpID = models.AutoField(primary_key=True)
+    servicio = models.CharField(max_length=255)
+    precioUnitario = models.DecimalField(max_digits=10, decimal_places=2)
+    detalles = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.servicio
+
+class Lugar(models.Model):
+    lugarID = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=255)
+    minPersonas = models.IntegerField()
+    maxPersonas = models.IntegerField()
+    ubicacion = models.CharField(max_length=255)
+    detalles = models.TextField()
+
+    def __str__(self):
+        return self.nombre
+
+
+#endregion
+
+#region Clientes
+class Cliente(models.Model):
+    clienteID = models.AutoField(primary_key=True)
+    nombres = models.CharField(max_length=255, blank=False, null=False)
+    apellidos = models.CharField(max_length=255, blank=False, null=False)
+    nit = models.CharField(max_length=20)
+    telefono = models.CharField(max_length=8)
+    email = models.CharField(max_length=255, unique=True)
+
+    def __str__(self):
+        return self.nombres + self.apellidos
+#endregion
