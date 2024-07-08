@@ -97,6 +97,19 @@ class MenuRecetas(models.Model):
         return self.idMenuRecetas
 #endregion
 
+#region Clientes
+class Cliente(models.Model):
+    clienteID = models.AutoField(primary_key=True)
+    nombres = models.CharField(max_length=255, blank=False, null=False)
+    apellidos = models.CharField(max_length=255, blank=False, null=False)
+    nit = models.CharField(max_length=20)
+    telefono = models.CharField(max_length=8)
+    email = models.CharField(max_length=255, unique=True)
+
+    def __str__(self):
+        return self.nombres + self.apellidos
+#endregion
+
 #region Evento
 #------------ SECCION EVENTOS --------------
 class ServiciosOpcionales(models.Model):
@@ -119,18 +132,42 @@ class Lugar(models.Model):
     def __str__(self):
         return self.nombre
 
-
-#endregion
-
-#region Clientes
-class Cliente(models.Model):
-    clienteID = models.AutoField(primary_key=True)
-    nombres = models.CharField(max_length=255, blank=False, null=False)
-    apellidos = models.CharField(max_length=255, blank=False, null=False)
-    nit = models.CharField(max_length=20)
-    telefono = models.CharField(max_length=8)
-    email = models.CharField(max_length=255, unique=True)
+class Evento(models.Model):
+    eventoID = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=255)
+    codigo = models.CharField(max_length=255)
+    clienteID = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    lugarID = models.ForeignKey(Lugar, on_delete=models.CASCADE)
+    fecha = models.DateField()
+    horaInicio = models.TimeField()
+    horaFin = models.TimeField()
+    isCotizacion = models.BooleanField()
+    cantPersonas = models.IntegerField()
 
     def __str__(self):
-        return self.nombres + self.apellidos
+        return self.nombre
+    
+
+class ServiciosOpcionalesLista(models.Model):
+    servOpListID= models.AutoField(primary_key = True)
+    servOpID = models.ForeignKey(ServiciosOpcionales, on_delete=models.CASCADE)
+    eventoID = models.ForeignKey(Evento, on_delete=models.CASCADE)
+    observaciones = models.TextField()
+
+    def __str__(self):
+        return self.servOpListID
+    
+
+class ListadoMenus(models.Model):
+    listMenuID = models.AutoField(primary_key=True)
+    menuID = models.ForeignKey(Menu, on_delete=models.CASCADE)
+    cantidad = models.IntegerField()
+    observaciones = models.TextField()
+    eventoID = models.ForeignKey(Evento, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.listMenuID
+
+
 #endregion
+
