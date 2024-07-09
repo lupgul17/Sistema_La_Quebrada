@@ -99,7 +99,7 @@ class MenuRecetas(models.Model):
 
 #region Clientes
 class Cliente(models.Model):
-    clienteID = models.AutoField(primary_key=True)
+    idCliente = models.AutoField(primary_key=True)
     nombres = models.CharField(max_length=255, blank=False, null=False)
     apellidos = models.CharField(max_length=255, blank=False, null=False)
     nit = models.CharField(max_length=20)
@@ -113,7 +113,7 @@ class Cliente(models.Model):
 #region Evento
 #------------ SECCION EVENTOS --------------
 class ServiciosOpcionales(models.Model):
-    servOpID = models.AutoField(primary_key=True)
+    idServOp = models.AutoField(primary_key=True)
     servicio = models.CharField(max_length=255)
     precioUnitario = models.DecimalField(max_digits=10, decimal_places=2)
     detalles = models.TextField(blank=True, null=True)
@@ -122,7 +122,7 @@ class ServiciosOpcionales(models.Model):
         return self.servicio
 
 class Lugar(models.Model):
-    lugarID = models.AutoField(primary_key=True)
+    idLugar = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=255)
     minPersonas = models.IntegerField()
     maxPersonas = models.IntegerField()
@@ -133,7 +133,7 @@ class Lugar(models.Model):
         return self.nombre
 
 class Evento(models.Model):
-    eventoID = models.AutoField(primary_key=True)
+    idEvento = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=255)
     codigo = models.CharField(max_length=255)
     clienteID = models.ForeignKey(Cliente, on_delete=models.CASCADE)
@@ -149,7 +149,7 @@ class Evento(models.Model):
     
 
 class ServiciosOpcionalesLista(models.Model):
-    servOpListID= models.AutoField(primary_key = True)
+    idServOpList= models.AutoField(primary_key = True)
     servOpID = models.ForeignKey(ServiciosOpcionales, on_delete=models.CASCADE)
     eventoID = models.ForeignKey(Evento, on_delete=models.CASCADE)
     observaciones = models.TextField()
@@ -159,7 +159,7 @@ class ServiciosOpcionalesLista(models.Model):
     
 
 class ListadoMenus(models.Model):
-    listMenuID = models.AutoField(primary_key=True)
+    idListMenu = models.AutoField(primary_key=True)
     menuID = models.ForeignKey(Menu, on_delete=models.CASCADE)
     cantidad = models.IntegerField()
     observaciones = models.TextField()
