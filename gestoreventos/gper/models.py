@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.conf import settings
 # Create your models here.
 
 #region Menu
@@ -8,7 +8,7 @@ from django.db import models
 class UnidadMedida(models.Model):
     idUnidadMedida = models.AutoField(primary_key=True)
     unidad = models.CharField(max_length=255, blank=False, null=False, error_messages="El campo no puede estar vacío")
-
+    
     def __str__(self):
         return self.unidad
     
