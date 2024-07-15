@@ -1,27 +1,41 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.http import HttpResponse
-from .forms import PostUnidadMedida, PostIngrediente
 from .models import UnidadMedida, Ingrediente
+from .forms import UnidadMedidaForm
 
 # Create your views here.
 def index(request):
     return HttpResponse("Hola Mundo xD")
 
 #region CRUD UnidadMedida
-# def UnidadMedidaList(request):
-#     unidades = UnidadMedida.objects.all()
-#     return render(request, 'gper/Unidades.html', {'unidades': unidades})
+class UnidadMedidaListView(ListView):
+    model = UnidadMedida
+    template_name = 'Unidades.html'
 
-# def UnidadMedidaNew(request):
-#     if request.method == "POST":
-#         form = PostUnidadMedida(request.POST)
-#         if form.is_valid():
-#             unidadmedida = form.save(commit=False)
-#             unidadmedida.save()
-#             return redirect("UM")
-#     else:
-#         form = PostUnidadMedida()
-#     return render(request, 'gper/UnidadMedidaEdit.html', {'form':form})
+class UnidadMedidaDetailView(DetailView):
+    model = UnidadMedida
+    template_name = "UnidadesDetalle.html"
+
+class UnidadMedidaCreateView(CreateView):
+    model = UnidadMedida
+    form_class = UnidadMedidaForm
+    template_name = 'UnidadForm.html'
+    success_url = reverse_lazy("UnidadMedidaList")
+
+class UnidadMedidaUpdateView(UpdateView):
+    model = UnidadMedida
+    form_class = UnidadMedidaForm
+    template_name = 'UnidadForm.html'
+    success_url = reverse_lazy("UnidadMedidaList")
+
+class UnidadMedidaDeleteView(DeleteView):
+    model = UnidadMedida
+    template_name = 'UnidadDeleteForm.html'
+    success_url = reverse_lazy("UnidadMedidaList")
+
 #endregion
 
 #region CRUD Ingrediente

@@ -7,8 +7,7 @@ from django.conf import settings
 
 class UnidadMedida(models.Model):
     idUnidadMedida = models.AutoField(primary_key=True)
-    unidad = models.CharField(max_length=255, blank=False, null=False, error_messages="El campo no puede estar vacío")
-    
+    unidad = models.CharField(max_length=255, blank=False, null=False, error_messages="El campo no puede estar vacío") 
     def __str__(self):
         return self.unidad
     

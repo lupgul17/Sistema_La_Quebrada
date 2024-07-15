@@ -1,11 +1,12 @@
 from django.urls import path
-
 from . import views
 
 urlpatterns = [
     path("", views.index, name="index"),
-    path("unidadMedida", views.UnidadMedidaList, name="UM"),
-    path("unidadMedida/new", views.UnidadMedidaNew, name="UMnew"),
-    path("ingrediente", views.IngredienteList, name="Ingrediente"),
-    path("ingrediente/new", views.IngredienteNew, name="Ingredientenew"),
+    path('unidadmedida/', views.UnidadMedidaListView.as_view(), name="UnidadMedidaList"),
+    path('unidadmedida/<int:pk>/', views.UnidadMedidaDetailView.as_view(), name="UnidadMedidaDetail"),
+    path('unidadmedida/new/', views.UnidadMedidaCreateView.as_view(), name="UnidadMedidaNew"), 
+    path('unidadmedida/<int:pk>/edit/', views.UnidadMedidaUpdateView.as_view(), name= "UnidadMedidaEdit"),
+    path('unidadmedida/<int:pk>/delete/', views.UnidadMedidaDeleteView.as_view(), name="UnidadMedidaDelete"),
+
 ]
