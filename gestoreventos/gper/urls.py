@@ -8,5 +8,5 @@ urlpatterns = [
     path('unidadmedida/new/', views.UnidadMedidaCreateView.as_view(), name="UnidadMedidaNew"), 
     path('unidadmedida/<int:pk>/edit/', views.UnidadMedidaUpdateView.as_view(), name= "UnidadMedidaEdit"),
     path('unidadmedida/<int:pk>/delete/', views.UnidadMedidaDeleteView.as_view(), name="UnidadMedidaDelete"),
-
+    
 ]
