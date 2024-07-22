@@ -1,0 +1,18 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+    <h2>Lista de Ingredientes</h2>
+    <table>
+        {% for unidad in object_list %}
+        <tr>
+            <td><a href="{% url 'IngredienteDetail' unidad.idIngrediente %}">{{ unidad.nombre}} </a> </td>
+            <td><a href="{% url 'IngredienteEdit' unidad.idIngrediente %}">Editar</a></td>
+            <td><a href="{% url 'IngredienteDelete' unidad.idIngrediente %}">Eliminar</a></td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td>No hay ingredientes disponibles.</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

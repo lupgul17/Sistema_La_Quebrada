@@ -13,27 +13,27 @@ def index(request):
 #region CRUD UnidadMedida
 class UnidadMedidaListView(ListView):
     model = UnidadMedida
-    template_name = 'Unidades.html'
+    template_name = 'UnidadMedida/Unidades.html'
 
 class UnidadMedidaDetailView(DetailView):
     model = UnidadMedida
-    template_name = "UnidadesDetalle.html"
+    template_name = "UnidadMedida/UnidadesDetalle.html"
 
 class UnidadMedidaCreateView(CreateView):
     model = UnidadMedida
     form_class = UnidadMedidaForm
-    template_name = 'UnidadForm.html'
+    template_name = 'UnidadMedida/UnidadForm.html'
     success_url = reverse_lazy("UnidadMedidaList")
 
 class UnidadMedidaUpdateView(UpdateView):
     model = UnidadMedida
     form_class = UnidadMedidaForm
-    template_name = 'UnidadForm.html'
+    template_name = 'UnidadMedida/UnidadForm.html'
     success_url = reverse_lazy("UnidadMedidaList")
 
 class UnidadMedidaDeleteView(DeleteView):
     model = UnidadMedida
-    template_name = 'UnidadDeleteForm.html'
+    template_name = 'UnidadMedida/UnidadDeleteForm.html'
     success_url = reverse_lazy("UnidadMedidaList")
 
 #endregion
@@ -41,53 +41,53 @@ class UnidadMedidaDeleteView(DeleteView):
 #region CRUD Ingrediente
 class IngredienteListView(ListView):
     model = Ingrediente
-    template_name = 'Ingredientes.html'
+    template_name = 'Ingredientes/Ingredientes.html'
 
 class IngredienteDetailView(DetailView):
     model = Ingrediente
-    template_name = "IngredientesDetalle.html"
+    template_name = "Ingredientes/IngredientesDetalle.html"
 
 class IngredienteCreateView(CreateView):
     model = Ingrediente
     form_class = IngredienteForm
-    template_name = 'IngredienteForm.html'
+    template_name = 'Ingredientes/IngredienteForm.html'
     success_url = reverse_lazy("IngredienteList")
 
 class IngredienteUpdateView(UpdateView):
     model = Ingrediente
     form_class = IngredienteForm
-    template_name = 'IngredienteForm.html'
+    template_name = 'Ingredientes/IngredienteForm.html'
     success_url = reverse_lazy("IngredienteList")
 
 class IngredienteDeleteView(DeleteView):
     model = Ingrediente
-    template_name = 'IngredienteDeleteForm.html'
+    template_name = 'Ingredientes/IngredienteDeleteForm.html'
     success_url = reverse_lazy("IngredienteList")
 #endregion
 #region CRUD TecnicaCoccion
 class TecnicaCoccionListView(ListView):
     model = TecnicaCoccion
-    template_name = 'TecnicasCoccion.html'
+    template_name = 'TecnicaCoccion/TecnicasCoccion.html'
 
 class TecnicaCoccionDetailView(DetailView):
     model = TecnicaCoccion
-    template_name = "TecnicasCoccionDetalle.html"
+    template_name = "TecnicaCoccion/TecnicasCoccionDetalle.html"
 
 class TecnicaCoccionCreateView(CreateView):
     model = TecnicaCoccion
     form_class = TecnicaCoccionForm
-    template_name = 'TecnicaCoccionForm.html'
+    template_name = 'TecnicaCoccion/TecnicaCoccionForm.html'
     success_url = reverse_lazy("TecnicaCoccionList")
 
 class TecnicaCoccionUpdateView(UpdateView):
     model = TecnicaCoccion
     form_class = TecnicaCoccionForm
-    template_name = 'TecnicaCoccionForm.html'
+    template_name = 'TecnicaCoccion/TecnicaCoccionForm.html'
     success_url = reverse_lazy("TecnicaCoccionList")
 
 class TecnicaCoccionDeleteView(DeleteView):
     model = TecnicaCoccion
-    template_name = 'TecnicaCoccionDeleteForm.html'
+    template_name = 'TecnicaCoccion/TecnicaCoccionDeleteForm.html'
     success_url = reverse_lazy("TecnicaCoccionList")
 #endregion
 
