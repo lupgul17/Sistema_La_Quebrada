@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path("", views.index, name="index"),
+    path("", views.index, name="MainPage"),
     #unidadMedida
     path('unidadmedida/', views.UnidadMedidaListView.as_view(), name="UnidadMedidaList"),
     path('unidadmedida/<int:pk>/', views.UnidadMedidaDetailView.as_view(), name="UnidadMedidaDetail"),

@@ -1,18 +1,24 @@
 {% extends 'base_generic.html' %}
 
 {% block content %}
-    <h2>Lista de Unidades de Medida</h2>
-    <table>
-        {% for unidad in object_list %}
-        <tr>
-            <td><a href="{% url 'UnidadMedidaDetail' unidad.idUnidadMedida %}">{{ unidad.unidad }} </a> </td>
-            <td><a href="{% url 'UnidadMedidaEdit' unidad.idUnidadMedida %}">Editar</a></td>
-            <td><a href="{% url 'UnidadMedidaDelete' unidad.idUnidadMedida %}">Eliminar</a></td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td>No hay unidades de medida disponibles.</td>
-        </tr>
-        {% endfor %}
-    </table>
+    <div class="container-sm">
+        <br>
+        <h2>Lista de Unidades de Medida</h2>
+        <div class="table-responsive-sm">
+            <table class="table table-light table-striped table-hover">
+                {% for unidad in object_list %}
+                <tr>
+                    <td><a class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover" href="{% url 'UnidadMedidaDetail' unidad.idUnidadMedida %}">{{ unidad.unidad }} </a> </td>
+                    <td><a href="{% url 'UnidadMedidaEdit' unidad.idUnidadMedida %}"><button type="button" class="btn btn-warning"><i class="fas fa-pen-to-square"></i></button></a></td>
+                    <td><a href="{% url 'UnidadMedidaDelete' unidad.idUnidadMedida %}"><button type="button" class="btn btn-danger"><i class="fas fa-trash-can"></i></button></a></td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td>No hay unidades de medida disponibles.</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        
+    </div>
 {% endblock %}

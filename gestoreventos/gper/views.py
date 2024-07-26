@@ -8,7 +8,7 @@ from .forms import *
 
 # Create your views here.
 def index(request):
-    return HttpResponse("Hola Mundo xD")
+    return render(request, 'main.html')
 
 #region CRUD UnidadMedida
 class UnidadMedidaListView(ListView):
