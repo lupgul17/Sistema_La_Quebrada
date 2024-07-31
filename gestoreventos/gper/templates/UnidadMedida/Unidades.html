@@ -3,14 +3,25 @@
 {% block content %}
     <div class="container-sm">
         <br>
-        <h2>Lista de Unidades de Medida</h2>
+        <div class="d-flex p-2">
+            <div class="d-flex justify-content-start flex-grow-1">
+                <h2>Lista de Unidades de Medida</h2> 
+            </div>
+            <div class="d-flex justify-content-center">
+                
+            </div>
+            <div class="d-flex justify-content-end">
+                <a href="{% url 'UnidadMedidaNew' %}"><button type="button" class="btn btn-success"><i class="fas fa-file-circle-plus"></i></button> </a>
+            </div>
+        </div>
+        
         <div class="table-responsive-sm">
             <table class="table table-light table-striped table-hover">
                 {% for unidad in object_list %}
                 <tr>
-                    <td><a class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover" href="{% url 'UnidadMedidaDetail' unidad.idUnidadMedida %}">{{ unidad.unidad }} </a> </td>
-                    <td><a href="{% url 'UnidadMedidaEdit' unidad.idUnidadMedida %}"><button type="button" class="btn btn-warning"><i class="fas fa-pen-to-square"></i></button></a></td>
-                    <td><a href="{% url 'UnidadMedidaDelete' unidad.idUnidadMedida %}"><button type="button" class="btn btn-danger"><i class="fas fa-trash-can"></i></button></a></td>
+                    <td><a class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover" href="#" data-bs-toggle="modal" data-bs-target="#miModal" data-url="{% url 'UnidadMedidaDetail' unidad.idUnidadMedida %}"><h5>{{ unidad.unidad }} </h5> </a> </td>
+                    <td><a href="#" data-bs-toggle="modal" data-bs-target="#miModal" data-url="{% url 'UnidadMedidaEdit' unidad.idUnidadMedida %}"><button type="button" class="btn btn-warning"><i class="fas fa-pen-to-square"></i></button></a></td>
+                    <td><a href="#" data-bs-toggle="modal" data-bs-target="#miModal" data-url="{% url 'UnidadMedidaDelete' unidad.idUnidadMedida %}"><button type="button" class="btn btn-danger"><i class="fas fa-trash-can"></i></button></a></td>
                 </tr>
                 {% empty %}
                 <tr>
@@ -19,6 +30,39 @@
                 {% endfor %}
             </table>
         </div>
-        
+        <div class="modal fade" id="miModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Unidad de Medida</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="contenidoModal">
+                    <!-- Aquí se cargará el contenido de la página -->
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Incluye Bootstrap JS después de jQuery -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#miModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget); // Botón que activó el modal
+                var url = button.data('url'); // Extrae la URL del atributo data-url
+                var modal = $(this);
+                if (modal.find('.modal-body').length) {
+            modal.find('.modal-body').load(url); // Carga el contenido de la URL en el cuerpo del modal
+        } else {
+            console.error('El elemento .modal-body no existe.');
+        } // Carga el contenido de la URL en el cuerpo del modal
+            });
+            
+        });
+        </script>
 {% endblock %}

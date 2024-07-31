@@ -1,10 +1,16 @@
-{% extends 'base_generic.html' %}
 
 {% block content %}
-    <h2>Nueva Unidad de Medida</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Guardar</button>
-    </form>
+<div class="mb-3 container-sm">
+    <div class="form-floating">
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="unidad">Unidad de Medida</label>
+                <input type="text" class="form-control" id="unidad" name="unidad" placeholder="Unidad de Medida">
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Guardar</button>
+        </form>
+    </div>
+</div>
+    
 {% endblock %}

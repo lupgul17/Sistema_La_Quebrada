@@ -5,7 +5,8 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.http import HttpResponse
 from .models import *
 from .forms import *
-
+from django.utils.decorators import method_decorator
+from django.views.decorators.http import require_http_methods
 # Create your views here.
 def index(request):
     return render(request, 'main.html')
@@ -15,6 +16,7 @@ class UnidadMedidaListView(ListView):
     model = UnidadMedida
     template_name = 'UnidadMedida/Unidades.html'
 
+@method_decorator(require_http_methods(["GET"]), name='dispatch')
 class UnidadMedidaDetailView(DetailView):
     model = UnidadMedida
     template_name = "UnidadMedida/UnidadesDetalle.html"
@@ -25,12 +27,14 @@ class UnidadMedidaCreateView(CreateView):
     template_name = 'UnidadMedida/UnidadForm.html'
     success_url = reverse_lazy("UnidadMedidaList")
 
+@method_decorator(require_http_methods(["GET", "POST"]), name='dispatch')
 class UnidadMedidaUpdateView(UpdateView):
     model = UnidadMedida
     form_class = UnidadMedidaForm
     template_name = 'UnidadMedida/UnidadForm.html'
-    success_url = reverse_lazy("UnidadMedidaList")
+    success_url = "/UnidadMedidaList/"
 
+@method_decorator(require_http_methods(["POST"]), name='dispatch')
 class UnidadMedidaDeleteView(DeleteView):
     model = UnidadMedida
     template_name = 'UnidadMedida/UnidadDeleteForm.html'
