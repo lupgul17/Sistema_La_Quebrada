@@ -5,11 +5,19 @@ class UnidadMedidaForm(forms.ModelForm):
     class Meta:
         model = UnidadMedida
         fields = ("unidad",)
+    def __init__(self, *args, **kwargs):
+        super(UnidadMedidaForm, self).__init__(*args,**kwargs)
+        for field in self.fields.values():
+            field.widget.attrs.update({'class': 'form-control'})
 
 class IngredienteForm(forms.ModelForm):
     class Meta:
         model = Ingrediente
         fields = ("nombre", "unidadCompra", "idUnidadMedida", "precioUnidadCompra", "especificaciones",)
+    def __init__(self, *args, **kwargs):
+        super(IngredienteForm, self).__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs.update({'class': 'form-control'})
 
 class TecnicaCoccionForm(forms.ModelForm):
     class Meta: 

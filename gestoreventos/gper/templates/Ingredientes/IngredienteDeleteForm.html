@@ -1,10 +1,17 @@
-{% extends 'base_generic.html' %}
 
+{% extends 'base_generic.html' %}
 {% block content %}
-    <h2>Eliminar Ingrediente</h2>
-    <p>¿Estás seguro de que quieres eliminar "{{ object.unidad }}"?</p>
-    <form method="post">
-        {% csrf_token %}
-        <button type="submit">Sí, eliminar</button>
-    </form>
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card" style="width: 30rem;">
+        <div class="card-body">
+            <h5 class="card-title text-center mb-4">Eliminar Ingrediente</h5>
+            <h4><b>ID:</b> {{ object.idIngrediente }}</h4> 
+            <h5><b>Nombre:</b> {{ object.nombre }}</h5> 
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger w-100 mt-3">Eliminar</button>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}

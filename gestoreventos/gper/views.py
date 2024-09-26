@@ -32,9 +32,9 @@ class UnidadMedidaUpdateView(UpdateView):
     model = UnidadMedida
     form_class = UnidadMedidaForm
     template_name = 'UnidadMedida/UnidadForm.html'
-    success_url = "/UnidadMedidaList/"
+    success_url = reverse_lazy("UnidadMedidaList")
 
-@method_decorator(require_http_methods(["POST"]), name='dispatch')
+@method_decorator(require_http_methods(["GET", "POST"]), name='dispatch')
 class UnidadMedidaDeleteView(DeleteView):
     model = UnidadMedida
     template_name = 'UnidadMedida/UnidadDeleteForm.html'
