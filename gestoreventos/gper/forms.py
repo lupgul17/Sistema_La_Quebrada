@@ -23,6 +23,10 @@ class TecnicaCoccionForm(forms.ModelForm):
     class Meta: 
         model = TecnicaCoccion
         fields = ("nombre", "descripcion",)
+    def __init__(self, *args, **kwargs):
+        super(TecnicaCoccionForm, self).__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs.update({'class': 'form-control'})
 
 class OrigenForm(forms.ModelForm):
     class Meta:
@@ -89,10 +93,3 @@ class ListadoMenusForm(forms.ModelForm):
         model = ListadoMenus
         fields = ("menuID", "cantidad", "observaciones", "eventoID")
 
-
-
-<<<<<<< Updated upstream
-#Comentario Random
-=======
-#Comentario Random xdxddx 2222
->>>>>>> Stashed changes

@@ -7,35 +7,36 @@ from .models import *
 from .forms import *
 from django.utils.decorators import method_decorator
 from django.views.decorators.http import require_http_methods
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 # Create your views here.
+@login_required
 def index(request):
     return render(request, 'main.html')
 
 #region CRUD UnidadMedida
-class UnidadMedidaListView(ListView):
+class UnidadMedidaListView(LoginRequiredMixin, ListView):
     model = UnidadMedida
     template_name = 'UnidadMedida/Unidades.html'
 
-@method_decorator(require_http_methods(["GET"]), name='dispatch')
-class UnidadMedidaDetailView(DetailView):
+
+class UnidadMedidaDetailView(LoginRequiredMixin, DetailView):
     model = UnidadMedida
     template_name = "UnidadMedida/UnidadesDetalle.html"
 
-class UnidadMedidaCreateView(CreateView):
+class UnidadMedidaCreateView(LoginRequiredMixin, CreateView):
     model = UnidadMedida
     form_class = UnidadMedidaForm
     template_name = 'UnidadMedida/UnidadForm.html'
     success_url = reverse_lazy("UnidadMedidaList")
 
-@method_decorator(require_http_methods(["GET", "POST"]), name='dispatch')
-class UnidadMedidaUpdateView(UpdateView):
+class UnidadMedidaUpdateView(LoginRequiredMixin, UpdateView):
     model = UnidadMedida
     form_class = UnidadMedidaForm
     template_name = 'UnidadMedida/UnidadForm.html'
     success_url = reverse_lazy("UnidadMedidaList")
 
-@method_decorator(require_http_methods(["GET", "POST"]), name='dispatch')
-class UnidadMedidaDeleteView(DeleteView):
+class UnidadMedidaDeleteView(LoginRequiredMixin, DeleteView):
     model = UnidadMedida
     template_name = 'UnidadMedida/UnidadDeleteForm.html'
     success_url = reverse_lazy("UnidadMedidaList")
@@ -43,27 +44,27 @@ class UnidadMedidaDeleteView(DeleteView):
 #endregion
 
 #region CRUD Ingrediente
-class IngredienteListView(ListView):
+class IngredienteListView(LoginRequiredMixin, ListView):
     model = Ingrediente
     template_name = 'Ingredientes/Ingredientes.html'
 
-class IngredienteDetailView(DetailView):
+class IngredienteDetailView(LoginRequiredMixin, DetailView):
     model = Ingrediente
     template_name = "Ingredientes/IngredientesDetalle.html"
 
-class IngredienteCreateView(CreateView):
+class IngredienteCreateView(LoginRequiredMixin, CreateView):
     model = Ingrediente
     form_class = IngredienteForm
     template_name = 'Ingredientes/IngredienteForm.html'
     success_url = reverse_lazy("IngredienteList")
 
-class IngredienteUpdateView(UpdateView):
+class IngredienteUpdateView(LoginRequiredMixin, UpdateView):
     model = Ingrediente
     form_class = IngredienteForm
     template_name = 'Ingredientes/IngredienteForm.html'
     success_url = reverse_lazy("IngredienteList")
 
-class IngredienteDeleteView(DeleteView):
+class IngredienteDeleteView(LoginRequiredMixin, DeleteView):
     model = Ingrediente
     template_name = 'Ingredientes/IngredienteDeleteForm.html'
     success_url = reverse_lazy("IngredienteList")

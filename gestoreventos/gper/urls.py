@@ -1,8 +1,11 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
-
+from django.contrib.auth import views as auth_views
 urlpatterns = [
     path("", views.index, name="MainPage"),
+    
+    path('login/', auth_views.LoginView.as_view(), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     #unidadMedida
     path('unidadmedida/', views.UnidadMedidaListView.as_view(), name="UnidadMedidaList"),
     path('unidadmedida/<int:pk>/', views.UnidadMedidaDetailView.as_view(), name="UnidadMedidaDetail"),

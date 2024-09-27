@@ -1,0 +1,17 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card" style="width: 30rem;">
+        <div class="card-body">
+            <h5 class="card-title text-center mb-4">Técnica de Cocción</h5>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary w-100 mt-3">Guardar</button>
+            </form>
+        </div>
+    </div>
+</div>
+    
+{% endblock %}
