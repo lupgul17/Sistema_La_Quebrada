@@ -3,7 +3,7 @@ from django.conf import settings
 # Create your models here.
 
 #region Menu
-#*************INICIO DEL MÓDULO DE MENÚ************************
+#*************INICIO DEL MÓDULO DE MENÚ************************ s
 
 class UnidadMedida(models.Model):
     idUnidadMedida = models.AutoField(primary_key=True)
