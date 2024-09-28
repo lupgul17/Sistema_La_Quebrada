@@ -18,7 +18,7 @@ class Ingrediente(models.Model):
     idUnidadMedida = models.ForeignKey(UnidadMedida, on_delete=models.CASCADE)
     precioUnidadCompra = models.DecimalField(max_digits=10, decimal_places=2, blank=False, null=False)
     especificaciones = models.TextField(blank=True, null=True)
-
+    existencias = models.IntegerField()
     def __str__(self):
         return self.nombre
 

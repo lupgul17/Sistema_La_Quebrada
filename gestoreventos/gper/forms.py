@@ -13,7 +13,7 @@ class UnidadMedidaForm(forms.ModelForm):
 class IngredienteForm(forms.ModelForm):
     class Meta:
         model = Ingrediente
-        fields = ("nombre", "unidadCompra", "idUnidadMedida", "precioUnidadCompra", "especificaciones",)
+        fields = ("nombre", "unidadCompra", "idUnidadMedida", "precioUnidadCompra", "especificaciones","existencias",)
     def __init__(self, *args, **kwargs):
         super(IngredienteForm, self).__init__(*args, **kwargs)
         for field in self.fields.values():

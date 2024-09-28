@@ -1,10 +1,11 @@
 
 {% block content %}
-    <h2>Detalle de Ingrediente</h2>
-    <p>ID: {{ object.idIngrediente }}</p>
+    <h2>Detalle de Ingrediente: {{ object.nombre }} </h2>
+    <p><b>Código: </b> {{ object.idIngrediente }}</p>
     <p>Nombre: {{ object.nombre }}</p>
     <p>Unidad de Compra: {{ object.unidadCompra }}</p>
-    <p>idUnidadMedida: {{ object.idUnidadMedida }}</p>
+    <p>Unidad de Medida: {{ object.idUnidadMedida }}</p>
     <p>Precio de la Unidad de Compra: {{ object.precioUnidadCompra }}</p>
     <p>Especificaciones: {{ object.especificaciones }}</p>
+    <p>Existencias: {{ object.existencias }}</p>
 {% endblock %}
