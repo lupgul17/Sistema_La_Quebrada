@@ -1,5 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
+from django.views import View
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.http import HttpResponse
@@ -9,6 +10,8 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from decimal import Decimal
+from .utils import convertir_unidad
 # Create your views here.
 @login_required
 def index(request):
@@ -156,15 +159,37 @@ class RecetaListView(ListView):
     model = Receta
     template_name = 'Receta/Recetas.html'
 
-class RecetaDetailView(DetailView):
-    model = Receta
-    template_name = "Receta/RecetaDetalle.html"
+# class RecetaDetailView(DetailView):
+#     model = Receta
+#     template_name = "Receta/RecetaDetalle.html"
+class RecetaDetailView(View):
+    template_name = 'Receta/RecetaDetalle.html'
+    def get(self, request, pk):
+        receta = get_object_or_404(Receta, idReceta=pk)
+        ingredientes = IngredientesReceta.objects.filter(recetaID=receta)
+        return render(request, self.template_name, {'receta': receta, 'ingredientes': ingredientes})
 
-class RecetaCreateView(CreateView):
-    model = Receta
-    form_class = RecetaForm
-    template_name = 'Receta/RecetaForm.html'
-    success_url = reverse_lazy("RecetaList")
+# class RecetaCreateView(CreateView):
+#     model = Receta
+#     form_class = RecetaForm
+#     template_name = 'Receta/RecetaForm.html'
+#     success_url = reverse_lazy("RecetaList")
+class RecetaCreateView(View):
+    def get(self, request):
+        receta_form = RecetaForm()
+        ingredientes_form = IngredientesRecetaForm()
+        return render(request, 'Receta/RecetaForm.html', {'receta_form': receta_form, 'ingredientes_form': ingredientes_form})
+
+    def post(self, request):
+        receta_form = RecetaForm(request.POST)
+        if receta_form.is_valid():
+            receta = receta_form.save(commit=False)
+            receta.costoReceta = 0  # Inicializamos costoReceta
+            receta.precioVenta = 0
+            receta.precioSugerido =0
+            receta.save()
+            return redirect('RecetaAddIngredientes', receta_id=receta.idReceta)
+        return render(request, 'RecetaForm.html', {'receta_form': receta_form})
 
 class RecetaUpdateView(UpdateView):
     model = Receta
@@ -212,11 +237,38 @@ class IngredientesRecetaDetailView(DetailView):
     model = IngredientesReceta
     template_name = "IngredientesReceta/IngredientesRecetaDetalle.html"
 
-class IngredientesRecetaCreateView(CreateView):
-    model = IngredientesReceta
-    form_class = IngredientesRecetaForm
-    template_name = 'IngredientesReceta/IngredientesRecetaForm.html'
-    success_url = reverse_lazy("IngredientesRecetaList")
+# class IngredientesRecetaCreateView(CreateView):
+#     model = IngredientesReceta
+#     form_class = IngredientesRecetaForm
+#     template_name = 'IngredientesReceta/IngredientesRecetaForm.html'
+#     success_url = reverse_lazy("IngredientesRecetaList")
+
+class AddIngredientsView(View):
+    def get(self, request, receta_id):
+        receta = get_object_or_404(Receta, idReceta=receta_id)
+        ingredientes_form = IngredientesRecetaForm()
+        return render(request, 'IngredientesReceta/AddIngredientesForm.html', {'receta': receta, 'ingredientes_form': ingredientes_form})
+
+    def post(self, request, receta_id):
+        receta = get_object_or_404(Receta, idReceta=receta_id)
+        ingrediente_id = request.POST.get('ingredienteId')
+        ingrediente = get_object_or_404(Ingrediente, idIngrediente=ingrediente_id)
+        ingredientes_form = IngredientesRecetaForm(request.POST, ingrediente=ingrediente)
+        if ingredientes_form.is_valid():
+            ingrediente_receta = ingredientes_form.save(commit=False)
+            ingrediente_receta.recetaID = receta
+            ingrediente_receta.save()
+            # Actualizar costoReceta
+            cantidad_uso_decimal = Decimal(str(ingrediente_receta.cantidadUso))
+            if ingrediente.idUnidadMedida != ingrediente_receta.medidaUso:
+                cantidad_uso_decimal = convertir_unidad(cantidad_uso_decimal, ingrediente_receta.medidaUso, ingrediente.idUnidadMedida)
+            receta.costoReceta += cantidad_uso_decimal * ingrediente.precioUnidadCompra
+            costoindividual = receta.costoReceta / receta.noPorciones
+            receta.precioSugerido = (receta.costoReceta + (receta.costoReceta * Decimal(0.3))) / receta.noPorciones
+            receta.precioVenta = receta.precioSugerido
+            receta.save()
+            return redirect('RecetaAddIngredientes', receta_id=receta.idReceta)
+        return render(request, 'IngredientesReceta/AddIngredientesForm.html', {'receta': receta, 'ingredientes_form': ingredientes_form,"costoindividual": costoindividual, })
 
 class IngredientesRecetaUpdateView(UpdateView):
     model = IngredientesReceta

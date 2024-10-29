@@ -32,6 +32,10 @@ class OrigenForm(forms.ModelForm):
     class Meta:
         model = Origen
         fields = ("origen",)
+    def __init__(self, *args, **kwargs):
+        super(OrigenForm, self).__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs.update({'class': 'form-control'})
 
 class MenuForm(forms.ModelForm):
     class Meta:
@@ -41,17 +45,22 @@ class MenuForm(forms.ModelForm):
 class RecetaForm(forms.ModelForm):
     class Meta:
         model = Receta
-        fields = ("codigoReceta", "nombreReceta", "idOrigen", "noPorciones", "temperaturaServicio", "tiempoElab", "costoReceta", "precioVenta",)
+        fields = ("codigoReceta", "nombreReceta", "idOrigen", "noPorciones", "temperaturaServicio", "tiempoElab","procedimiento")
 
 class TecnicasRecetaForm(forms.ModelForm):
     class Meta:
         model = TecnicasReceta
-        fields = ("recetaId", "tecnicaID",)
+        fields = ("recetaId", "tecnicaID","detalles")
 
 class IngredientesRecetaForm(forms.ModelForm):
     class Meta:
         model = IngredientesReceta
         fields = ("ingredienteId", "cantidadUso", "medidaUso", "rendimiento", "recetaID", )
+    def __init__(self, *args, **kwargs):
+        ingrediente = kwargs.pop('ingrediente', None)
+        super().__init__(*args, **kwargs)
+        if ingrediente:
+            self.fields['medidaUso'].queryset = UnidadMedida.objects.filter(unidad_destino__unidadOrigen=ingrediente.idUnidadMedida)
 
 class RecetaCostosForm(forms.ModelForm):
     class Meta: 

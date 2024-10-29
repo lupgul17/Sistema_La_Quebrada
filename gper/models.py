@@ -11,6 +11,15 @@ class UnidadMedida(models.Model):
     def __str__(self):
         return self.unidad
     
+class ConversionUnidad(models.Model):
+    idConversion = models.AutoField(primary_key=True)
+    unidadOrigen = models.ForeignKey(UnidadMedida, related_name='unidad_origen', on_delete=models.CASCADE)
+    unidadDestino = models.ForeignKey(UnidadMedida, related_name='unidad_destino', on_delete=models.CASCADE)
+    factorConversion = models.DecimalField(max_digits=10, decimal_places=6, help_text="Factor de conversión de origen a destino")
+    
+    def __str__(self):
+        return f"{self.unidadOrigen} -> {self.unidadDestino}: {self.factorConversion}"
+
 class Ingrediente(models.Model):
     idIngrediente = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=255)
@@ -47,17 +56,18 @@ class Menu(models.Model):
         return self.nombreOficial
 
 class Receta(models.Model):
-    OPCIONES = (("frio", "Frio"), ("caliente", "Caliente"), ("al tiempo", "Al Tiempo"))
+    OPCIONES = (("Frio", "Frio"), ("Caliente", "Caliente"), ("Al tiempo", "Al Tiempo"))
     idReceta = models.AutoField(primary_key=True)
     codigoReceta = models.CharField(max_length=255)
     nombreReceta = models.CharField(max_length=255)
     idOrigen = models.ForeignKey(Origen, on_delete=models.CASCADE)
     noPorciones = models.IntegerField()
-    temperaturaServicio = models.CharField(max_length=10, choices=OPCIONES, default="caliente")
+    temperaturaServicio = models.CharField(max_length=10, choices=OPCIONES, default="Caliente")
     tiempoElab = models.CharField(max_length=100)
     costoReceta = models.DecimalField(max_digits=10, decimal_places=2)
+    precioSugerido = models.DecimalField(max_digits=10, decimal_places=2)
     precioVenta = models.DecimalField(max_digits=10, decimal_places=2)
-
+    procedimiento = models.TextField()
     def __str__(self):
         return self.nombreReceta
 
@@ -65,7 +75,7 @@ class TecnicasReceta(models.Model):
     idTecnicasReceta = models.AutoField(primary_key=True)
     recetaId = models.ForeignKey(Receta, on_delete=models.CASCADE)
     tecnicaID = models.ForeignKey(TecnicaCoccion, on_delete=models.CASCADE)
-    
+    detalles = models.TextField()
     def __str__(self):
         return self.idTecnicasReceta
 

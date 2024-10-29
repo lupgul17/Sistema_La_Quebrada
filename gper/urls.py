@@ -1,6 +1,7 @@
 from django.urls import path, include
 from . import views
 from django.contrib.auth import views as auth_views
+from .views import RecetaCreateView, AddIngredientsView
 urlpatterns = [
     path("", views.index, name="MainPage"),
     
@@ -39,7 +40,8 @@ urlpatterns = [
     #Receta
     path('receta/', views.RecetaListView.as_view(), name="RecetaList"),
     path('receta/<int:pk>/', views.RecetaDetailView.as_view(), name="RecetaDetail"),
-    path('receta/new/', views.RecetaCreateView.as_view(), name="RecetaNew"), 
+    path('receta/new/', RecetaCreateView.as_view(), name='RecetaNew'),
+    path('receta/<int:receta_id>/add_ingredients/', AddIngredientsView.as_view(), name='RecetaAddIngredientes'),
     path('receta/<int:pk>/edit/', views.RecetaUpdateView.as_view(), name= "RecetaEdit"),
     path('receta/<int:pk>/delete/', views.RecetaDeleteView.as_view(), name="RecetaDelete"),
     #TecnicasReceta
@@ -49,11 +51,11 @@ urlpatterns = [
     path('tecnicasreceta/<int:pk>/edit/', views.TecnicasRecetaUpdateView.as_view(), name= "TecnicasRecetaEdit"),
     path('tecnicasreceta/<int:pk>/delete/', views.TecnicasRecetaDeleteView.as_view(), name="TecnicasRecetaDelete"),
     #IngredientesReceta
-    path('ingredientesreceta/', views.IngredientesRecetaListView.as_view(), name="IngredientesRecetaList"),
-    path('ingredientesreceta/<int:pk>/', views.IngredientesRecetaDetailView.as_view(), name="IngredientesRecetaDetail"),
-    path('ingredientesreceta/new/', views.IngredientesRecetaCreateView.as_view(), name="IngredientesRecetaNew"), 
-    path('ingredientesreceta/<int:pk>/edit/', views.IngredientesRecetaUpdateView.as_view(), name= "IngredientesRecetaEdit"),
-    path('ingredientesreceta/<int:pk>/delete/', views.IngredientesRecetaDeleteView.as_view(), name="IngredientesRecetaDelete"),
+    # path('ingredientesreceta/', views.IngredientesRecetaListView.as_view(), name="IngredientesRecetaList"),
+    # path('ingredientesreceta/<int:pk>/', views.IngredientesRecetaDetailView.as_view(), name="IngredientesRecetaDetail"),
+    # #path('ingredientesreceta/new/', views.IngredientesRecetaCreateView.as_view(), name="IngredientesRecetaNew"), 
+    # path('ingredientesreceta/<int:pk>/edit/', views.IngredientesRecetaUpdateView.as_view(), name= "IngredientesRecetaEdit"),
+    # path('ingredientesreceta/<int:pk>/delete/', views.IngredientesRecetaDeleteView.as_view(), name="IngredientesRecetaDelete"),
     #RecetaCostos
     path('recetacostos/', views.RecetaCostosListView.as_view(), name="RecetaCostosList"),
     path('recetacostos/<int:pk>/', views.RecetaCostosDetailView.as_view(), name="RecetaCostosDetail"),

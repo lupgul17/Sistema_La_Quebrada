@@ -1,0 +1,25 @@
+{% block content %}
+
+<h1>{{ receta.nombreReceta }}</h1>
+<p><strong>Código:</strong> {{ receta.codigoReceta }}</p>
+<p><strong>Origen:</strong> {{ receta.idOrigen.origen }}</p>
+<p><strong>No. de Porciones:</strong> {{ receta.noPorciones }}</p>
+<p><strong>Temperatura de Servicio:</strong> {{ receta.temperaturaServicio }}</p>
+<p><strong>Tiempo de Elaboración:</strong> {{ receta.tiempoElab }}</p>
+<p><strong>Costo de la Receta total:</strong> {{ receta.costoReceta }}</p>
+<p><strong>Costo de la Receta Individual:</strong> {{ costoindividual }}</p>
+<p><strong>Precio de Venta Individual (Sugerido):</strong> {{receta.precioVenta}}</p>
+<p><strong>Precio de Venta Individual: </strong>{{ receta.precioVenta }}</p>
+
+<h2>Ingredientes</h2>
+<ul>
+    {% for ingrediente in ingredientes %}
+        <li>
+            <strong>Ingrediente:</strong> {{ ingrediente.ingredienteId.nombre }} <br>
+            <strong>Cantidad:</strong> {{ ingrediente.cantidadUso }} <br>
+            <strong>Medida:</strong> {{ ingrediente.medidaUso.unidad }} <br>
+            <strong>Rendimiento:</strong> {{ ingrediente.rendimiento }}
+        </li>
+    {% endfor %}
+
+{% endblock %}

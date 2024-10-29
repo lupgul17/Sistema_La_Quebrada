@@ -1,0 +1,10 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+<h1>Agregar Ingredientes a {{ receta.nombreReceta }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ ingredientes_form.as_p }}
+        <button type="submit">Agregar Ingrediente</button>
+    </form>
+{% endblock %}
